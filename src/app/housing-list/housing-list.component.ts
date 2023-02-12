@@ -12,6 +12,8 @@ export class HousingListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchHousingLocations() {}
+  searchHousingLocations(text: string) {
+      console.log(text)
+  }
 
 }
