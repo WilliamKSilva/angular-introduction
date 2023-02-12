@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { HousingLocation } from '../housing-location';
 
 @Component({
@@ -10,13 +10,28 @@ export class HousingListComponent implements OnInit {
   
   @Input() locationList: HousingLocation[] = []
 
+  results: HousingLocation[] = []
+
+  @Output() locationSelectedEvent = new EventEmitter<HousingLocation>()
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   searchHousingLocations(text: string) {
-      console.log(text)
+      if (!text) {
+          return
+      }
+
+      this.results = this.locationList.filter(
+          (location: HousingLocation) => location.city
+          .toLowerCase()
+          .includes(text.toLowerCase()
+      ))
   }
 
+  selectHousinLocation(location: HousingLocation) {
+      this.locationSelectedEvent.emit(location)
+  }
 }
